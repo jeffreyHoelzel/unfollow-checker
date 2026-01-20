@@ -15,7 +15,7 @@ export type ReportSummaryCardProps = {
  * @param {ReportSummaryCardProps} props Component props
  * @returns {JSX.Element} Rendered summary card
  */
-export const ReportCardSummary = ({ report }: ReportSummaryCardProps) => {
+export const ReportSummaryCard = ({ report }: ReportSummaryCardProps) => {
   return (
     <View style={{ padding: 12, borderWidth: 1, borderRadius: 12, gap: 4 }}>
       <Text>Followers: {report.stats.followerCount}</Text>
