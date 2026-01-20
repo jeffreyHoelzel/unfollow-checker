@@ -20,4 +20,3 @@ export const importInstagramExportZip = async (): Promise<InstagramFollowReport 
 };
 
 export type { InstagramFollowReport } from "../types/instagram";
-
