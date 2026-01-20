@@ -25,4 +25,4 @@ export const StatusBanner = ({ title, message }: StatusBannerProps) => {
       <Text style={{ marginTop: 6 }}>{message}</Text>
     </View>
   );
-}
+};

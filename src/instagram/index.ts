@@ -18,5 +18,3 @@ export const importInstagramExportZip = async (): Promise<InstagramFollowReport 
   const extracted = await extractFollowersAndFollowingJsonTexts(picked.uri);
   return buildFollowReportFromZipExtract(extracted);
 };
-
-export type { InstagramFollowReport } from "../types/instagram";

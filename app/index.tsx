@@ -11,7 +11,7 @@ function IndexScreen() {
         onPress={() => router.push("/results")}
         style={{ padding: 12, borderWidth: 1, borderRadius: 10 }}
       >
-        <Text>Go to results (placeholder)</Text>
+        <Text>Go/ to results (placeholder)</Text>
       </Pressable>
     </View>
   );
