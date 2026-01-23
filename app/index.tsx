@@ -1,20 +1,48 @@
+import { useState } from "react";
 import { useRouter } from "expo-router";
-import { Pressable, Text, View } from "react-native";
+import { ImportScreen } from "../src/components/ImportScreen";
+import { importInstagramExportZip } from "../src/instagram";
+import { setReport } from "../src/utils/reportStore";
+import type { InstagramFollowReport } from "../src/types/instagram";
 
-function IndexScreen() {
+const IndexScreen = () => {
   const router = useRouter();
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string>("");
+
+  const onImportZip = async () => {
+    try {
+      setError("");
+      setIsLoading(true);
+
+      const res: InstagramFollowReport | null = await importInstagramExportZip();
+      if (!res) {
+        setIsLoading(false);
+        return;
+      }
+
+      setReport(res);
+      setIsLoading(false);
+      router.push("/results");
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Unknown error occured";
+      setError(msg);
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <View style={{ flex: 1, padding: 16, justifyContent: "center" }}>
-      <Text style={{ fontSize: 22, marginBottom: 12 }}>Instagram follow checker</Text>
-      <Pressable
-        onPress={() => router.push("/results")}
-        style={{ padding: 12, borderWidth: 1, borderRadius: 10 }}
-      >
-        <Text>Go/ to results (placeholder)</Text>
-      </Pressable>
-    </View>
+    <ImportScreen
+      isLoading={isLoading}
+      error={error}
+      report={null}
+      query=""
+      filteredUsernames={[]}
+      onImportZip={onImportZip}
+      onChangeQuery={() => { }}
+    />
   );
-}
+};
 
 export default IndexScreen;
