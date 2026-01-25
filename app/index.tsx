@@ -17,13 +17,17 @@ const IndexScreen = () => {
       setIsLoading(true);
 
       const res: InstagramFollowReport | null = await importInstagramExportZip();
+      console.log("importInstagramExportZip results", res);
       if (!res) {
+        console.log("user canceled or import returned null");
         setIsLoading(false);
         return;
       }
 
+      console.log("sotring report with notFollowingBack length", res.notFollowingBack.length);
       setReport(res);
       setIsLoading(false);
+      console.log("stored report, navigating to results")
       router.push("/results");
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Unknown error occured";

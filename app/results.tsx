@@ -21,7 +21,13 @@ const ResultsRoute = () => {
     );
   }
 
+  console.log("results route report counts", {
+    following: report.following.length,
+    followers: report.followers.length,
+    notBack: report.notFollowingBack.length
+  });
+
   return <ResultsScreen report={report} />
 };
 
-export default ResultsScreen;
+export default ResultsRoute;

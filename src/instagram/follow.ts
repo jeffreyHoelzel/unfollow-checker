@@ -18,12 +18,10 @@ const safeJsonParse = (text: string): unknown | null => {
 
 /**
  * Recursively traverses an unknown JSON structure and collects usernames from
- * Instagram export objects that contain "string_list_data".
+ * Instagram export objects.
  *
- * Instagram exports commonly store usernames at:
- * string_list_data[0].value
- *
- * This function intentionally searches broadly to tolerate variations in export structure.
+ * Followers export commonly stores usernames at string_list_data[].value.
+ * Following export commonly stores usernames at the parent object's title.
  *
  * @param {unknown} node Current JSON node being inspected
  * @param {string[]} out Accumulator for usernames
@@ -45,7 +43,15 @@ const collectUsernamesFromUnknown = (node: unknown, out: string[]): void => {
   // found one username
   const obj = node as Record<string, unknown>;
   const stringListData = obj["string_list_data"];
+
+  // if object looks like following data entry, title should be username
   if (Array.isArray(stringListData)) {
+    const title = obj["title"]
+    if (typeof title === "string" && title.length > 0) {
+      out.push(title);
+    }
+
+    // otherwise, object should include value attribute for follower data
     for (const entry of stringListData) {
       if (!entry || typeof entry !== "object") continue;
 

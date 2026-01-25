@@ -6,11 +6,19 @@ import { SearchBar } from "./SearchBar";
 import { UserList } from "./UserList";
 
 export type ResultsScreenProps = {
-  report: InstagramFollowReport;
+  report?: InstagramFollowReport;
 };
 
 export const ResultsScreen = ({ report }: ResultsScreenProps) => {
   const [query, setQuery] = useState("");
+
+  if (!report) {
+    return (
+      <View style={{ flex: 1, padding: 16, justifyContent: "center" }}>
+        <Text style={{ opacity: 0.8 }}>No report could be loaded from memory.</Text>
+      </View>
+    );
+  }
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -28,7 +36,7 @@ export const ResultsScreen = ({ report }: ResultsScreenProps) => {
 
       <UserList title="Accounts" usernames={filtered} maxCount={500} />
 
-      {report.notFollowingBack.length == 0 ? (
+      {report.notFollowingBack.length === 0 ? (
         <View style={{ paddingTop: 8 }}>
           <Text style={{ opacity: 0.7 }}>Everyone you follow also follows you :)</Text>
         </View>
