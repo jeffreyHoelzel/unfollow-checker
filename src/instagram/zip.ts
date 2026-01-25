@@ -32,7 +32,7 @@ const getFileName = (path: string): string => {
  */
 const isFollowersPath = (path: string): boolean => {
   const name = getFileName(path);
-  return name.startsWith("followers") && name.endsWith(".json");
+  return /^followers(_\d+)?\.json$/.test(name);
 };
 
 /**
@@ -44,7 +44,7 @@ const isFollowersPath = (path: string): boolean => {
  */
 const isFollowingPath = (path: string): boolean => {
   const name = getFileName(path);
-  return name.startsWith("following") && name.endsWith(".json");
+  return /^following(_\d+)?\.json$/.test(name);
 };
 
 /**
