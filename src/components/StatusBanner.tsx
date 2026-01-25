@@ -1,4 +1,6 @@
 import { Text, View } from "react-native";
+import { theme } from "../ui/theme";
+import { common } from "../ui/commonStyles";
 
 /**
  * Props for the StatusBar component.
@@ -20,9 +22,17 @@ export type StatusBannerProps = {
  */
 export const StatusBanner = ({ title, message }: StatusBannerProps) => {
   return (
-    <View style={{ padding: 12, borderWidth: 1, borderRadius: 12 }}>
-      <Text style={{ fontWeight: "600" }}>{title}</Text>
-      <Text style={{ marginTop: 6 }}>{message}</Text>
+    <View
+      style={[
+        common.card,
+        {
+          backgroundColor: "rgba(239, 68, 68, 0.12)",
+          borderColor: "rgba(239, 68, 68, 0.28)"
+        }
+      ]}
+    >
+      <Text style={{ color: theme.color.text, fontWeight: "800", fontSize: 15 }}>{title}</Text>
+      <Text style={{ color: theme.color.textMuted, marginTop: 6, lineHeight: 20 }}>{message}</Text>
     </View>
   );
 };

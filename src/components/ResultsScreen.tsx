@@ -4,6 +4,7 @@ import type { InstagramFollowReport } from "../types/instagram";
 import { ReportSummaryCard } from "./ReportSummaryCard";
 import { SearchBar } from "./SearchBar";
 import { UserList } from "./UserList";
+import { common } from "../ui/commonStyles";
 
 export type ResultsScreenProps = {
   report?: InstagramFollowReport;
@@ -14,8 +15,8 @@ export const ResultsScreen = ({ report }: ResultsScreenProps) => {
 
   if (!report) {
     return (
-      <View style={{ flex: 1, padding: 16, justifyContent: "center" }}>
-        <Text style={{ opacity: 0.8 }}>No report could be loaded from memory.</Text>
+      <View style={[common.screen, { justifyContent: "center", padding: 16 }]}>
+        <Text style={common.subtitle}>No report could be loaded from memory.</Text>
       </View>
     );
   }
@@ -27,20 +28,22 @@ export const ResultsScreen = ({ report }: ResultsScreenProps) => {
   }, [report, query]);
 
   return (
-    <ScrollView style={{ padding: 16, gap: 12 }}>
-      <Text style={{ fontSize: 22, fontWeight: "600" }}>Not following back</Text>
+    <View style={common.screen}>
+      <ScrollView contentContainerStyle={common.content}>
+        <Text style={common.title}>Not following back</Text>
 
-      <ReportSummaryCard report={report} />
+        <ReportSummaryCard report={report} />
 
-      <SearchBar value={query} onChange={setQuery} placeholder="Search username" />
+        <SearchBar value={query} onChange={setQuery} placeholder="Search username" />
 
-      <UserList title="Accounts" usernames={filtered} maxCount={500} />
+        <UserList title="Accounts" usernames={filtered} maxCount={500} />
 
-      {report.notFollowingBack.length === 0 ? (
-        <View style={{ paddingTop: 8 }}>
-          <Text style={{ opacity: 0.7 }}>Everyone you follow also follows you :)</Text>
-        </View>
-      ) : null}
-    </ScrollView>
+        {report.notFollowingBack.length === 0 ? (
+          <View style={common.card}>
+            <Text style={common.subtitle}>Everyone you follow also follows you :)</Text>
+          </View>
+        ) : null}
+      </ScrollView>
+    </View>
   );
 };

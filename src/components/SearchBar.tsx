@@ -1,4 +1,5 @@
 import { TextInput } from "react-native";
+import { common } from "../ui/commonStyles";
 
 /**
  * Props for the SearchBar component.
@@ -24,14 +25,10 @@ export const SearchBar = ({ value, onChange, placeholder }: SearchBarProps) => {
       value={value}
       onChangeText={onChange}
       placeholder={placeholder ?? "Search"}
+      placeholderTextColor={"rgba(229, 231, 235, 0.55"}
       autoCapitalize="none"
       autoCorrect={false}
-      style={{
-        borderWidth: 1,
-        borderRadius: 12,
-        paddingHorizontal: 12,
-        paddingVertical: 10
-      }}
+      style={common.input}
     />
   );
 };

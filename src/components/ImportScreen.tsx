@@ -4,6 +4,7 @@ import { ReportSummaryCard } from "./ReportSummaryCard";
 import { SearchBar } from "./SearchBar";
 import { StatusBanner } from "./StatusBanner";
 import { UserList } from "./UserList";
+import { common } from "../ui/commonStyles";
 
 /** 
  * Props for the ImportScreen component.
@@ -42,48 +43,45 @@ export const ImportScreen = ({
   onChangeQuery
 }: ImportScreenProps) => {
   return (
-    <ScrollView contentContainerStyle={{ padding: 16, gap: 12 }}>
-      <Text style={{ fontSize: 22, fontWeight: "600" }}>Instagram non followers</Text>
-
-      <Text style={{ opacity: 0.8 }}>
-        Import your Instagram export zip and see who does not follow you back.
-      </Text>
-
-      <Pressable
-        onPress={onImportZip}
-        disabled={isLoading}
-        style={{
-          paddingVertical: 14,
-          paddingHorizontal: 14,
-          borderRadius: 12,
-          borderWidth: 1,
-          opacity: isLoading ? 0.6 : 1
-        }}
-      >
-        <Text style={{ fontSize: 16, fontWeight: "600" }}>
-          {isLoading ? "Importing..." : "Import export zip"}
-        </Text>
-      </Pressable>
-
-      {isLoading ? (
-        <View style={{ paddingVertical: 6 }}>
-          <ActivityIndicator />
+    <View style={common.screen}>
+      <ScrollView contentContainerStyle={common.content}>
+        <View style={{ gap: 8 }}>
+          <Text style={common.title}>Instagram non followers</Text>
+          <Text style={common.subtitle}>
+            Import your Instagram export zip and see who does not follow you back.
+          </Text>
         </View>
-      ) : null}
 
-      {error ? <StatusBanner title="Error" message={error} /> : null}
+        <Pressable
+          onPress={onImportZip}
+          disabled={isLoading}
+          style={[common.button, isLoading ? common.buttonDisabled : null]}
+        >
+          <Text style={common.buttonText}>
+            {isLoading ? "Importing..." : "Import export zip"}
+          </Text>
+        </Pressable>
 
-      {report ? (
-        <View style={{ gap: 10 }}>
-          <ReportSummaryCard report={report} />
+        {isLoading ? (
+          <View style={{ paddingTop: 4 }}>
+            <ActivityIndicator />
+          </View>
+        ) : null}
 
-          <SearchBar value={query} onChange={onChangeQuery} placeholder="Search username" />
+        {error ? <StatusBanner title="Error" message={error} /> : null}
 
-          <UserList title="Not following back" usernames={filteredUsernames} maxCount={250} />
-        </View>
-      ) : (
-        <Text style={{ opacity: 0.7 }}>No data imported yet.</Text>
-      )}
-    </ScrollView>
+        {report ? (
+          <View style={{ gap: 12 }}>
+            <ReportSummaryCard report={report} />
+            <SearchBar value={query} onChange={onChangeQuery} placeholder="Search username" />
+            <UserList title="Not following back" usernames={filteredUsernames} maxCount={250} />
+          </View>
+        ) : (
+          <View style={common.card}>
+            <Text style={common.subtitle}>No data imported yet.</Text>
+          </View>
+        )}
+      </ScrollView>
+    </View>
   );
-}
+};
