@@ -13,17 +13,26 @@ export type InstagramZipExtract = {
 };
 
 /**
+ * Returns the last path segment (filename) from a ZIP entry path.
+ *
+ * @param {string} path ZIP entry file path
+ * @returns {string} Lowercased filename
+ */
+const getFileName = (path: string): string => {
+  const parts = path.split("/");
+  return (parts[parts.length - 1] ?? "").toLowerCase();
+}
+
+/**
  * Determines whether a ZIP entry path likely corresponds to
  * an Instagram followers JSON file.
- *
- * Excludes paths that also contain "following" to avoid false positives.
  *
  * @param {string} path - ZIP entry file path
  * @returns {boolean} True if the path likely represents followers data
  */
 const isFollowersPath = (path: string): boolean => {
-  const p = path.toLowerCase();
-  return p.includes("followers") && !p.includes("following");
+  const name = getFileName(path);
+  return /^followers(_\d+)?\.json$/.test(name);
 };
 
 /**
@@ -34,8 +43,8 @@ const isFollowersPath = (path: string): boolean => {
  * @returns {boolean} True if the path likely represents following data
  */
 const isFollowingPath = (path: string): boolean => {
-  const p = path.toLowerCase();
-  return p.includes("following") && !p.includes("followers");
+  const name = getFileName(path);
+  return /^following(_\d+)?\.json$/.test(name);
 };
 
 /**
